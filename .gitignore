@@ -22,3 +22,4 @@ web-build/
 .pnp.*
 
 package-lock.json
+keys.js

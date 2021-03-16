@@ -1,8 +1,8 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import HomeScreen from "../components/homeScreen";
-import ChatScreen from "../components/chatScreen";
+import HomeScreen from "../screens/homeScreen";
+import ChatScreen from "../screens/chatScreen";
 
 import * as firebase from 'firebase';
 import apiKeys from '../config/keys';

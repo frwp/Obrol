@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import {View, TextInput, StyleSheet, TouchableOpacity, EdgeInsetsPropType} from 'react-native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { windowHeight, windowWidth } from '../utils/Dimensions.js';
 
-const FormInput = ({labelValue, placeholderText, iconType, ...rest}) => {
+const FormInput = forwardRef(({labelValue, placeholderText, iconType, ...rest}, ref) => {
     return(
         <View style={styles.inputContainer}>
             <View style={styles.iconStyle}>
                 <AntDesign name={iconType} size={25} color='#666' />
             </View>
             <TextInput
+                ref={ref}
                 value={labelValue}
                 style={styles.input}
                 numberOfLines={1}
@@ -20,7 +21,7 @@ const FormInput = ({labelValue, placeholderText, iconType, ...rest}) => {
             />
         </View>
     )
-}
+})
 
 export default FormInput;
 

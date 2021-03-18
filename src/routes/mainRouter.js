@@ -1,14 +1,13 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import HomeScreen from "../screens/homeScreen";
-import ChatScreen from "../screens/chatScreen";
 
 import * as firebase from 'firebase';
 import apiKeys from '../config/keys';
 import SignUp from '../screens/SignUp';
 import SignIn from '../screens/SignIn';
 import LoadingScreen from '../screens/LoadingScreen';
+import TabRouter from "./tabRouter";
 
 const Stack = createStackNavigator();
 
@@ -24,8 +23,7 @@ export default function MainRouter() {
       <Stack.Screen name={'Loading'} component={LoadingScreen} options={{ headerShown: false }}/>
       <Stack.Screen name='Sign Up' component={SignUp} options={{ headerShown: false }}/>
       <Stack.Screen name='Sign In' component={SignIn} options={{ headerShown: false }}/>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Chat" component={ChatScreen} />
+      <Stack.Screen name='Home' component={TabRouter} />
       </Stack.Navigator>
     </NavigationContainer>
   );

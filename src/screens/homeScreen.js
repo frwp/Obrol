@@ -39,10 +39,6 @@ export default function HomeScreen({ navigation }) {
             <Text>
                 Open up src/components/homeScreen.js to start working on Obrol!
             </Text>
-            <Button
-                title='button - touch me plz'
-                onPress={() => navigation.navigate('Chat')}
-            />
             <StatusBar style='auto' />
 
             <FormButton buttonTitle='Logout' onPress={handleLogoutButton} />

@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import HomeScreen from '../screens/homeScreen';
-import ChatScreen from '../screens/chatScreen';
+import ChatListScreen from '../screens/chatListScreen';
+import { windowWidth } from '../utils/Dimensions';
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 const TabRouter = () => {
     return (
-        <Tab.Navigator>
-            <Tab.Screen name='Home' component={HomeScreen} />
-            <Tab.Screen name='Chat' component={ChatScreen} />
+        <Tab.Navigator backBehavior='initialRoute' initialLayout={windowWidth}>
+            <Tab.Screen name='Home' component={HomeScreen} title='Profile' />
+            <Tab.Screen name='Chat' component={ChatListScreen} />
         </Tab.Navigator>
     );
 };

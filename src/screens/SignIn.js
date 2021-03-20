@@ -5,6 +5,7 @@ import { CommonActions } from '@react-navigation/routers';
 import { signIn } from '../API/firebaseMethods';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
+import firebase from 'firebase';
 
 export default function SignIn({ navigation }) {
     const [email, setEmail] = useState('');
@@ -19,16 +20,26 @@ export default function SignIn({ navigation }) {
             Alert.alert('Password field is required.');
         }
 
-        signIn(email, password).then(
-            navigation.dispatch(
-                CommonActions.reset({
-                    index: 1,
-                    routes: [{ name: 'Home' }],
-                })
-            )
-        );
+        signIn(email, password);
         setEmail('');
         setPassword('');
+
+        /**
+         * need this before navigating to home view
+         * otherwise error will happen because 
+         * firebase.auth().currentuser is still null
+         * but immedieately used.
+         */
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 1,
+                        routes: [{ name: 'Home' }],
+                    })
+                );
+            }
+        });
     };
 
     const refInputPasswd = createRef();

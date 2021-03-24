@@ -7,6 +7,7 @@ export async function registration(email, password, lastName, firstName) {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
     const currentUser = firebase.auth().currentUser;
 
+    // added empty photoURL placeholder to be modified later
     const db = firebase.firestore();
     db.collection("users")
       .doc(currentUser.uid)
@@ -14,6 +15,7 @@ export async function registration(email, password, lastName, firstName) {
         email: currentUser.email,
         lastName: lastName,
         firstName: firstName,
+        photoURL: ''
       });
   } catch (err) {
     Alert.alert("There is something wrong!!!!", err.message);

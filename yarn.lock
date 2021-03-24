@@ -2827,6 +2827,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-navigation/material-top-tabs@npm:^5.3.14":
+  version: 5.3.14
+  resolution: "@react-navigation/material-top-tabs@npm:5.3.14"
+  dependencies:
+    color: ^3.1.3
+  peerDependencies:
+    "@react-navigation/native": ^5.0.5
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">= 1.0.0"
+    react-native-reanimated: ">= 1.0.0"
+    react-native-tab-view: ">= 2.0.0"
+  checksum: fb08fe808b1abb90cae52aa640b6dfb7a762fd50f80427a22eebfd6c690ecce328b67bdf7f8ab269d9f86202b173ca626ecb21e3b956ff488b766996a7c181fe
+  languageName: node
+  linkType: hard
+
 "@react-navigation/native@npm:^5.9.3":
   version: 5.9.3
   resolution: "@react-navigation/native@npm:5.9.3"
@@ -8490,6 +8506,18 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"react-native-tab-view@npm:^2.16.0":
+  version: 2.16.0
+  resolution: "react-native-tab-view@npm:2.16.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: "*"
+    react-native-reanimated: "*"
+  checksum: de0ed0e90ad50ef7fc131fa293138de184849b1cd7c4adbde28da17c148e91c836a784809298b1562a3ba7ed1114f3474b1a368a4a6746379c2da9d544b0404c
+  languageName: node
+  linkType: hard
+
 "react-native-web@npm:~0.13.12":
   version: 0.13.18
   resolution: "react-native-web@npm:0.13.18"
@@ -8855,6 +8883,7 @@ fsevents@^1.2.7:
     "@expo-google-fonts/roboto": ^0.1.0
     "@react-native-community/masked-view": 0.1.10
     "@react-navigation/material-bottom-tabs": ^5.3.14
+    "@react-navigation/material-top-tabs": ^5.3.14
     "@react-navigation/native": ^5.9.3
     "@react-navigation/stack": ^5.14.3
     expo: ~40.0.0
@@ -8869,6 +8898,7 @@ fsevents@^1.2.7:
     react-native-reanimated: ~1.13.0
     react-native-safe-area-context: 3.1.9
     react-native-screens: ~2.15.2
+    react-native-tab-view: ^2.16.0
     react-native-web: ~0.13.12
   languageName: unknown
   linkType: soft

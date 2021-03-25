@@ -32,7 +32,7 @@ const ChatItem = ({ item, onPress }) => {
                 <Card
                     imageUri={item.photoURL}
                     title={item.title}
-                    lastMessage={item.message}
+                    lastMessage={item.recentMessage.messageText}
                 />
             </View>
         </TouchableOpacity>

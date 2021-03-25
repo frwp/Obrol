@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
+import { fetchGroupByUserId } from '../API/firebaseMethods';
 import ChatItem from '../components/ChatItem';
+import * as firebase from 'firebase';
 
 const itemData = {
     title: 'First message',
@@ -12,17 +14,42 @@ const itemData = {
 const itemData2 = {
     title: 'Second message',
     message: 'hello this is second message',
-    photoURL:
-        '',
+    photoURL: '',
 };
 
 let LIST = [itemData, itemData2, itemData];
 
 const Chat = ({ navigation }) => {
+    let currentUserUID = firebase.auth().currentUser.uid;
+    const [chatList, setChatList] = useState([]);
+
+    useEffect(() => {
+        const db = firebase.firestore();
+        let allGroups = [];
+        let unsubscribe = db
+            .collection('chatroom')
+            .where('members', 'array-contains', currentUserUID)
+            .onSnapshot((snapshot) => {
+                console.log('uid: ',currentUserUID)
+                snapshot.forEach((doc) => {
+                    data = doc.data();
+                    data.id = doc.id;
+                    console.log(data);
+                    if (data.recentMessage) {
+                        allGroups.push(data);
+                    }
+                });
+                setChatList(allGroups);
+            });
+        return () => {
+            unsubscribe();
+        };
+    }, []);
+
     return (
         <View style={styles.container}>
             <FlatList
-                data={LIST}
+                data={chatList}
                 renderItem={({ item, index, separators }) => (
                     <ChatItem
                         item={item}

@@ -8,7 +8,11 @@ const Tab = createMaterialTopTabNavigator();
 
 const TabRouter = () => {
     return (
-        <Tab.Navigator backBehavior='initialRoute' initialLayout={windowWidth}>
+        <Tab.Navigator
+            backBehavior='initialRoute'
+            initialLayout={windowWidth}
+            tabBarPosition='bottom'
+        >
             <Tab.Screen name='Home' component={HomeScreen} title='Profile' />
             <Tab.Screen name='Chat' component={ChatListScreen} />
         </Tab.Navigator>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Alert, ScrollView, Keyboard ,StyleSheet, SafeAreaView} from 'react-native';
+import { View, Text, TextInput, Alert, ScrollView, Keyboard ,StyleSheet, SafeAreaView, StatusBar} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { registration } from '../API/firebaseMethods';
 import FormInput from '../components/FormInput';
@@ -47,6 +47,7 @@ export default function SignUp({ navigation }) {
   return (
 
      <View style={styles.container}>
+       <StatusBar barStyle='dark-content'/>
        <Text style={styles.text}>Create an account </Text>
        <FormInput
             labelValue={firstName}
@@ -138,6 +139,6 @@ const styles = StyleSheet.create({
       navButtonText: {
         fontSize: 18,
         fontWeight: '500',
-        color: '#2e64e5',
+        color: '#6B48DE',
       },
 });

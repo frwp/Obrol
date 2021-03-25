@@ -1,11 +1,32 @@
 import React, { useState, createRef } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert, Image } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert, Image, Dimensions, StatusBar, ImageBackground } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { CommonActions } from '@react-navigation/routers';
 import { signIn } from '../API/firebaseMethods';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import firebase from 'firebase';
+import LoadingScreen from './LoadingScreen'
+
+import {
+    useFonts,
+    Roboto_100Thin,
+    Roboto_100Thin_Italic,
+    Roboto_300Light,
+    Roboto_300Light_Italic,
+    Roboto_400Regular,
+    Roboto_400Regular_Italic,
+    Roboto_500Medium,
+    Roboto_500Medium_Italic,
+    Roboto_700Bold,
+    Roboto_700Bold_Italic,
+    Roboto_900Black,
+    Roboto_900Black_Italic,
+  } from '@expo-google-fonts/roboto';
+
+
+import * as Animatable from 'react-native-animatable';
+import { color } from 'react-native-reanimated';
 
 export default function SignIn({ navigation }) {
     const [email, setEmail] = useState('');
@@ -40,67 +61,114 @@ export default function SignIn({ navigation }) {
                 );
             }
         });
+
+        
     };
 
     const refInputPasswd = createRef();
 
+    let [fontsLoaded] = useFonts({
+        Roboto_100Thin,
+        Roboto_100Thin_Italic,
+        Roboto_300Light,
+        Roboto_300Light_Italic,
+        Roboto_400Regular,
+        Roboto_400Regular_Italic,
+        Roboto_500Medium,
+        Roboto_500Medium_Italic,
+        Roboto_700Bold,
+        Roboto_700Bold_Italic,
+        Roboto_900Black,
+        Roboto_900Black_Italic,
+      });
+
+    if (!fontsLoaded) {
+        return <LoadingScreen />;
+    }
     return (
         <View style={styles.container}>
-            <Image
-                source={require('../../assets/obrol.png')}
-                style={styles.logo}
-            />
-            <Text style={styles.text}>ObrolApp</Text>
+            <StatusBar translucent backgroundColor='transparent'/>
+            <ImageBackground source={require('../../assets/chatting.jpg')} style={styles.backgroundImage}>
+            <View style={styles.header}>
+                
+                <Text style={styles.text_header}>Welkam!!</Text>
+            </View>
 
-            <FormInput
-                labelValue={email}
-                onChangeText={(email) => setEmail(email)}
-                placeholderText='Email'
-                iconType='user'
-                keyboardType='email-address'
-                autoCapitalize='none'
-                autoCorrect={false}
-                returnKeyType='next'
-                onSubmitEditing={() => refInputPasswd.current.focus()}
-            />
+            <Animatable.View animation='fadeInUp' easing='ease-out-expo' style={styles.footer}>
 
-            <FormInput
-                labelValue={password}
-                onChangeText={(password) => setPassword(password)}
-                placeholderText='Password'
-                iconType='lock'
-                secureTextEntry={true}
-                ref={refInputPasswd}
-            />
-
-            <FormButton buttonTitle='Sign in' onPress={handlePress} />
-
-            <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
-                <Text style={styles.navButtonText}>Forgot Password?</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-                style={styles.forgotButton}
-                onPress={() => navigation.navigate('Sign Up')}
-            >
-                <Text style={styles.navButtonText}>
-                    Don't have an account? Create here
+                <Text style={styles.text_footer}>
+                    <Text style={[styles.text_footer,{fontWeight: 'bold', fontSize: 72, color: '#6B48DE'}]}>Obrol</Text>in apa aja, bareng siapa aja!
                 </Text>
-            </TouchableOpacity>
+
+                <FormInput
+                    labelValue={email}
+                    onChangeText={(email) => setEmail(email)}
+                    placeholderText='Email'
+                    iconType='user'
+                    keyboardType='email-address'
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    returnKeyType='next'
+                    onSubmitEditing={() => refInputPasswd.current.focus()}
+                />
+
+                <FormInput
+                    labelValue={password}
+                    onChangeText={(password) => setPassword(password)}
+                    placeholderText='Password'
+                    iconType='lock'
+                    secureTextEntry={true}
+                    ref={refInputPasswd}
+                />
+
+                <FormButton buttonTitle='Sign in' onPress={handlePress} />
+                
+                <TouchableOpacity
+                    style={styles.forgotButton}
+                    onPress={() => navigation.navigate('Sign Up')}
+                >
+                    <Text style={styles.navButtonText}>
+                        Don't have an account? Create here
+                    </Text>
+                </TouchableOpacity>
+            </Animatable.View>
+            </ImageBackground>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    button: {
-        width: 200,
-        padding: 5,
-        backgroundColor: '#ff9999',
-        borderWidth: 2,
-        borderColor: 'white',
-        borderRadius: 15,
+    container: {
+        flex: 1,
+        backgroundColor: '#6B48DE'
+    },
+    header: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        paddingHorizontal: 20,
+        paddingBottom: 50,
+    },
+    footer: {
+        flex: 2,
+        backgroundColor: '#f9fafd',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        paddingHorizontal: 20,
+        paddingVertical: 30
+    },
+    text_header: {
+        color: '#fff',
+        fontSize: 32,
+        marginBottom: 20,
+        fontFamily: 'Roboto_700Bold'
+    },
+    text_footer: {
+        color: '#000',
+        fontSize: 32,
+        width: '90%',
         alignSelf: 'center',
-        margin: '2%',
+        marginBottom: 20,
+        fontFamily: 'Roboto_400Regular'
     },
     forgotButton: {
         marginVertical: 35,
@@ -108,43 +176,11 @@ const styles = StyleSheet.create({
     navButtonText: {
         fontSize: 18,
         fontWeight: '500',
-        color: '#2e64e5',
-        // fontFamily: 'Lato-Regular',
+        color: '#6B48DE',
+        alignSelf: 'center'
     },
-    navButton: {
-        marginTop: 15,
-    },
-    logo: {
-        height: 150,
-        width: 150,
-        resizeMode: 'cover',
-    },
-    buttonText: {
-        fontSize: 20,
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    container: {
-        backgroundColor: '#f9fafd',
+    backgroundImage: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-        paddingTop: 50,
-    },
-    formInput: {
-        width: 300,
-        fontSize: 18,
-        borderWidth: 1,
-        borderColor: '#a4eddf',
-        padding: 10,
-        margin: 5,
-    },
-    text: {
-        fontSize: 36,
-        marginBottom: 10,
-        marginTop: 10,
-        color: '#051d5f',
-    },
+        resizeMode: 'cover', // or 'stretch'
+    }
 });

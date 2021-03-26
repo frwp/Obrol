@@ -57,11 +57,11 @@ const Chat = ({ navigation }) => {
                         onPress={() => {
                             navigation.navigate('ChatRoom', {
                                 currentUserUID: currentUserUID,
-                                messageId: item.id,
+                                chatroomId: item.id,
                             })
                         }
                             // {
-                            //     console.log('messageID:', item.id)
+                            //     console.log('chatroomId:', item.id)
                             //     console.log('uid:', currentUserUID)
                             // }
                         }

@@ -10,19 +10,20 @@ import {
 import * as firebase from 'firebase';
 
 const ChatRoom = ({ navigation, route }) => {
-    const { messageId, currentUserUID } = route.params;
-    console.log('messageID: ', messageId);
+    const { chatroomId, currentUserUID } = route.params;
+    console.log('chatroomId: ', chatroomId);
     const [chatItem, setChatItem] = useState([]);
+    const [currentMessage, setCurrentMessage] = useState('');
+    const db = firebase.firestore();
 
     useEffect(() => {
-        const db = firebase.firestore();
-        let messageList = [];
         let unsubscribe = db
             .collection('message')
-            .doc(messageId.trim())
+            .doc(chatroomId.trim())
             .collection('messages')
             .orderBy('sentAt')
             .onSnapshot((querySnapshot) => {
+                let messageList = [];
                 querySnapshot.forEach((doc) => {
                     if (doc) {
                         messageList.push(doc.data());
@@ -34,6 +35,43 @@ const ChatRoom = ({ navigation, route }) => {
             unsubscribe();
         };
     }, []);
+
+    const sendMessage = async (textMessage, sentAt, chatroomId) => {
+        if (textMessage) {
+            console.log(textMessage);
+            const message = {
+                textMessage: textMessage,
+                sentAt: firebase.firestore.FieldValue.serverTimestamp(),
+                sentBy: currentUserUID,
+                readBy: [],
+            };
+            try {
+                db.collection('message')
+                    .doc(chatroomId.trim())
+                    .collection('messages')
+                    .add(message)
+                    .then((docRef) => {
+                        // console.info(docRef, message)
+                    })
+                    .catch((error) => {
+                        console.error('error on sendmessage:', error);
+                    });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    };
+
+    const handleSend = async () => {
+        let currentTime = new Date();
+        try {
+            setCurrentMessage('');
+            await sendMessage(currentMessage, currentTime, chatroomId);
+        } catch (err) {
+            alert('Error, something happened');
+            console.error('Error:', err);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -51,8 +89,18 @@ const ChatRoom = ({ navigation, route }) => {
                 />
             </View>
             <View style={styles.inputBar}>
-                <TextInput style={styles.textBox} />
-                <TouchableOpacity>
+                <TextInput
+                    style={styles.textBox}
+                    value={currentMessage}
+                    onChangeText={(text) => {
+                        setCurrentMessage(text);
+                    }}
+                />
+                <TouchableOpacity
+                    onPress={() => {
+                        handleSend();
+                    }}
+                >
                     <Text style={{ margin: 10 }}>Send</Text>
                 </TouchableOpacity>
             </View>

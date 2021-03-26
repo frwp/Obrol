@@ -30,7 +30,7 @@ const Chat = ({ navigation }) => {
             .collection('chatroom')
             .where('members', 'array-contains', currentUserUID)
             .onSnapshot((snapshot) => {
-                console.log('uid: ',currentUserUID)
+                console.log('uid: ', currentUserUID);
                 snapshot.forEach((doc) => {
                     data = doc.data();
                     data.id = doc.id;
@@ -50,10 +50,21 @@ const Chat = ({ navigation }) => {
         <View style={styles.container}>
             <FlatList
                 data={chatList}
+                keyExtractor={(item) => item.id}
                 renderItem={({ item, index, separators }) => (
                     <ChatItem
                         item={item}
-                        onPress={() => navigation.navigate('ChatRoom')}
+                        onPress={() => {
+                            navigation.navigate('ChatRoom', {
+                                currentUserUID: currentUserUID,
+                                messageId: item.id,
+                            })
+                        }
+                            // {
+                            //     console.log('messageID:', item.id)
+                            //     console.log('uid:', currentUserUID)
+                            // }
+                        }
                     />
                 )}
             />

@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto_700Bold'
     },
     text_footer: {
-        color: '#000',
+        color: '#6B48DE',
         fontSize: 32,
         width: '90%',
         alignSelf: 'center',

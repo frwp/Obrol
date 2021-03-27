@@ -4,6 +4,24 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { registration } from '../API/firebaseMethods';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
+import LoadingScreen from './LoadingScreen';
+
+import {
+  useFonts,
+  Roboto_100Thin,
+  Roboto_100Thin_Italic,
+  Roboto_300Light,
+  Roboto_300Light_Italic,
+  Roboto_400Regular,
+  Roboto_400Regular_Italic,
+  Roboto_500Medium,
+  Roboto_500Medium_Italic,
+  Roboto_700Bold,
+  Roboto_700Bold_Italic,
+  Roboto_900Black,
+  Roboto_900Black_Italic,
+} from '@expo-google-fonts/roboto';
+
 
 export default function SignUp({ navigation }) {
   const [firstName, setFirstName] = useState('');
@@ -44,11 +62,29 @@ export default function SignUp({ navigation }) {
     }
   };
 
+  let [fontsLoaded] = useFonts({
+    Roboto_100Thin,
+    Roboto_100Thin_Italic,
+    Roboto_300Light,
+    Roboto_300Light_Italic,
+    Roboto_400Regular,
+    Roboto_400Regular_Italic,
+    Roboto_500Medium,
+    Roboto_500Medium_Italic,
+    Roboto_700Bold,
+    Roboto_700Bold_Italic,
+    Roboto_900Black,
+    Roboto_900Black_Italic,
+  });
+
+if (!fontsLoaded) {
+    return <LoadingScreen />;
+}
   return (
 
      <View style={styles.container}>
        <StatusBar barStyle='dark-content'/>
-       <Text style={styles.text}>Create an account </Text>
+       <Text style={styles.text}>Register </Text>
        <FormInput
             labelValue={firstName}
             onChangeText={(name) => setFirstName(name)}
@@ -117,15 +153,20 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#f9fafd',
         flex:1,
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
-        paddingTop: 50,
+        // paddingTop: 50,
       },
       text: {
-        fontSize: 28,
+        fontSize: 64,
         marginBottom: 10,
-        color: '#051d5f',
+        padding: 20,
+        paddingTop: '10%',
+        paddingBottom: '10%',
+        color: '#6B48DE',
+        alignSelf: 'flex-start',
+        fontFamily: 'Roboto_900Black'
       },
       navButton: {
         marginTop: 15,
